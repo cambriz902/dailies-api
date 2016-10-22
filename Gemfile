@@ -11,6 +11,8 @@ gem 'puma', '~> 3.0'
 gem 'active_model_serializers' 
 # user authentication
 gem 'devise'
+# annotate columns to model file
+gem 'annotate'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
