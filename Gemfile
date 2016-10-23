@@ -38,6 +38,9 @@ group :development, :test do
   gem 'factory_girl_rails'
 
   gem 'ffaker'
+
+  # Simpler syntax for rspec tests
+  gem "shoulda-matchers"
 end
 
 group :development do
