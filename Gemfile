@@ -36,6 +36,8 @@ group :development, :test do
 
   # Use Factory Girl for generating test data
   gem 'factory_girl_rails'
+
+  gem 'ffaker'
 end
 
 group :development do
