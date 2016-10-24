@@ -9,7 +9,7 @@ describe ApiConstraints do
 
     it "returns true when the version matches the 'Accept' header" do 
       request = double(host: 'api.dailies.dev',
-                       headers: { 'Accept' => 'application/vnd.dailies.v1' })
+                       headers: { 'Accept' => 'application/dailies.v1' })
       expect(api_constraints_v1.matches?(request)).to eq(true)
     end
 
