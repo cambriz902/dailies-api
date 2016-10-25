@@ -9,7 +9,7 @@ class Api::V1::DailyCategoriesController < ApplicationController
   def create
     category = DailyCategory.new(daily_category_params)
     category.update(user_id: 1)
-    if category.save!
+    if category.save
       respond_with(data: category, status: 201)
     else
       respond_with(error: category.errors, status: 422)
