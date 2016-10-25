@@ -5,7 +5,7 @@
 #  id           :integer          not null, primary key
 #  user_id      :integer
 #  kind         :string
-#  total_points :integer          default(0)
+#  total_points :integer          default(1)
 #  archived     :boolean          default(FALSE)
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
@@ -13,6 +13,8 @@
 
 FactoryGirl.define do
   factory :daily_category do
-    
+    kind 'health'
+    total_points 1
+    archived false
   end
 end

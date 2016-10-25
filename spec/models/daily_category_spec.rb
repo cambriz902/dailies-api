@@ -5,7 +5,7 @@
 #  id           :integer          not null, primary key
 #  user_id      :integer
 #  kind         :string
-#  total_points :integer          default(0)
+#  total_points :integer          default(1)
 #  archived     :boolean          default(FALSE)
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
@@ -13,6 +13,18 @@
 
 require 'rails_helper'
 
-# RSpec.describe DailyCategory, :type => :model do
-#   pending "add some examples to (or delete) #{__FILE__}"
-# end
+describe DailyCategory do
+  let(:daily_category) { FactoryGirl.build(:daily_category) }
+  subject { daily_category }
+
+  it { should respond_to(:kind) }
+  it { should respond_to(:total_points) }
+  it { should respond_to(:archived) }
+  it { should respond_to(:user_id) }
+
+  it { should validate_presence_of :kind }
+  it { should validate_presence_of :total_points }
+  it { should validate_numericality_of(:total_points).is_greater_than_or_equal_to(0) }
+  it { should validate_presence_of :user_id }
+
+end
