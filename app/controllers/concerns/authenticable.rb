@@ -5,7 +5,6 @@ module Authenticable
   end
 
   def authenticate_with_token!
-    binding.pry
     render json: { errors: 'Not authenticated' },
                 status: :unauthorized unless current_user.present?
   end
