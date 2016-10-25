@@ -18,14 +18,13 @@
 #
 
 class User < ApplicationRecord
+  validates :auth_token, uniqueness: true
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
   before_create :generate_authentication_token!
-  
-  validates :auth_token, uniqueness: true
 
   has_many :daily_categories
   has_many :dailies, through: :daily_categories
