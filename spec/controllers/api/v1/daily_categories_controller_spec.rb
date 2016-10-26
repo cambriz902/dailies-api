@@ -36,7 +36,7 @@ describe Api::V1::DailyCategoriesController do
         user = FactoryGirl.create(:user)
         @daily_category_attributes = FactoryGirl.attributes_for(:daily_category)
         api_authorization_header user.auth_token
-        post :create, { user_id: user.id, daily_category: @daily_category_attributes }
+        post :create, { daily_category: @daily_category_attributes }
       end
 
       it 'renders the json representation for the daily_category record created' do
@@ -53,7 +53,7 @@ describe Api::V1::DailyCategoriesController do
         @invalid_daily_category_attributes = 
           { kind: "health", total_points: 'ten' }
         api_authorization_header user.auth_token
-        post :create, { user_id: user.id, daily_category: @invalid_daily_category_attributes }
+        post :create, { daily_category: @invalid_daily_category_attributes }
       end
 
       it 'renders json errors' do 
