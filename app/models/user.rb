@@ -27,7 +27,7 @@ class User < ApplicationRecord
 
   before_create :generate_authentication_token!
 
-  has_many :daily_categories
+  has_many :daily_categories, dependent: :destroy
   has_many :dailies, through: :daily_categories
 
   def generate_authentication_token!

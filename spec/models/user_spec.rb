@@ -21,7 +21,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  before { @user = FactoryGirl.build(:user, auth_token: 'auniquetoken1234') }
+  before { @user = FactoryGirl.create(:user, auth_token: 'auniquetoken1234') }
 
   subject { @user }
 
@@ -38,6 +38,8 @@ RSpec.describe User, type: :model do
   it { should validate_uniqueness_of(:auth_token) }
   it { should allow_value('example@domain.com').for(:email) } 
 
+  it { should have_many(:daily_categories).dependent(:destroy) }
+
   describe '#generate_authentication_token!' do
     it 'generates a unique token' do
       Devise.stub(:friendly_token).and_return('auniquetoken123')
@@ -48,7 +50,23 @@ RSpec.describe User, type: :model do
     it 'generates another token when one already has been taken' do
       existing_user = FactoryGirl.create(:user, auth_token: 'auniquetoken123')
       @user.generate_authentication_token!
-      expect(@user.auth_token).not_to eql existing_user.auth_token
+      expect(@user.auth_token).not_to eql(existing_user.auth_token)
+    end
+  end
+
+  describe '#daily_categories association' do
+
+    before do
+      @user.save
+      3.times { FactoryGirl.build :daily_category, user: @user }
+    end
+
+    it 'destroys the associated products on self destruct' do
+      daily_categories = @user.daily_categories
+      @user.destroy
+      daily_categories.each do |daily_category|
+        expect(DailyCategory.find(daily_category)).to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
   end
 end

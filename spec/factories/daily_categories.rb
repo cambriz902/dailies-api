@@ -16,5 +16,6 @@ FactoryGirl.define do
     kind 'health'
     total_points 1
     archived false
+    user
   end
 end
