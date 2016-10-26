@@ -23,7 +23,6 @@ describe Api::V1::DailyCategoriesController do
 
     it 'returns 4 records from the database' do 
       daily_categories_response = json_response
-      # binding.pry
       expect(daily_categories_response).to have(4).items
     end
 
