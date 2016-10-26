@@ -34,6 +34,8 @@ group :development, :test do
   gem 'ffaker'
 
   gem 'shoulda-matchers', '~> 3.1.0'
+
+  gem 'rspec-collection_matchers'
 end
 
 group :development do
