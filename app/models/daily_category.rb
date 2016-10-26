@@ -12,7 +12,7 @@
 #
 
 class DailyCategory < ApplicationRecord
-  attr_accessor :user
+  # attr_accessor :user
 
   validates :kind, :total_points, :user_id, presence: true
   validates :total_points, numericality: { greater_than_or_equal_to: 0}, presence: true

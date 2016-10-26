@@ -8,14 +8,7 @@ Rails.application.routes.draw do
       devise_for :users
       resources :users, only: [:show, :create, :update, :destroy]
       resources :sessions, only: [:create, :destroy]
-      
-      resources :dailies, only: [:show, :create] do
-        collection do 
-          get 'category_dailies'
-        end
-      end
-
-      resources :daily_categories, only: [:create]
+      resources :daily_categories, only: [:show, :index]
     end
   end
 end
