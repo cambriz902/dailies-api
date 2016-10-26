@@ -8,7 +8,7 @@ describe Api::V1::DailyCategoriesController do
     end
 
     it 'returns the information about a daily category on a hash' do
-      daily_category_response = json_response
+      daily_category_response = json_response[:daily_category]
       expect(daily_category_response[:kind]).to eql(@daily_category.kind)
     end
 
@@ -22,7 +22,7 @@ describe Api::V1::DailyCategoriesController do
     end
 
     it 'returns 4 records from the database' do 
-      daily_categories_response = json_response
+      daily_categories_response = json_response[:daily_categories]
       expect(daily_categories_response).to have(4).items
     end
 
@@ -39,7 +39,7 @@ describe Api::V1::DailyCategoriesController do
       end
 
       it 'renders the json representation for the daily_category record created' do
-        daily_category_response = json_response
+        daily_category_response = json_response[:daily_category]
         expect(daily_category_response[:kind]).to eql(@daily_category_attributes[:kind])
       end
 
@@ -83,7 +83,7 @@ describe Api::V1::DailyCategoriesController do
       end
 
       it 'renders json representation for the udpated user' do
-        daily_category_response = json_response
+        daily_category_response = json_response[:daily_category]
         expect(daily_category_response[:kind]).to eql('web-development')
       end
 

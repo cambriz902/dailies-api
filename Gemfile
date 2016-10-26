@@ -8,7 +8,7 @@ gem 'pg', '~> 0.18'
 # Use Puma as the app server
 gem 'puma', '~> 3.0'
 # serializers
-gem 'active_model_serializers' 
+gem 'active_model_serializers', git: 'git@github.com:rails-api/active_model_serializers.git', branch: '0-8-stable'
 # user authentication
 gem 'devise'
 # annotate columns to model file
