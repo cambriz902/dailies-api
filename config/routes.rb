@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       devise_for :users
       resources :users, only: [:show, :create, :update, :destroy]
       resources :sessions, only: [:create, :destroy]
-      resources :daily_categories, only: [:show, :index, :create]
+      resources :daily_categories, only: [:show, :index, :create, :update, :destroy]
     end
   end
 end

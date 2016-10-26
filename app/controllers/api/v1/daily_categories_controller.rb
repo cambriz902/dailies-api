@@ -1,4 +1,5 @@
 class Api::V1::DailyCategoriesController < ApplicationController
+  before_action :authenticate_with_token!, only: [:create, :update, :destroy]
   respond_to :json
 
   def index
@@ -18,6 +19,21 @@ class Api::V1::DailyCategoriesController < ApplicationController
     else
       render json: { errors: daily_category.errors }, status: 422
     end
+  end
+
+  def update
+    daily_category = current_user.daily_categories.find(params[:id])
+    if daily_category.update(daily_category_params)
+      render json: daily_category, status: 200, location: [:api, daily_category]
+    else
+      render json: { errors: daily_category.errors }, status: 422
+    end
+  end
+
+  def destroy
+    daily_category = current_user.daily_categories.find(params[:id])
+    daily_category.destroy
+    head 204
   end
 
   private

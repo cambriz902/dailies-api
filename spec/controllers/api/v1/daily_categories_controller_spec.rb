@@ -69,4 +69,57 @@ describe Api::V1::DailyCategoriesController do
       it { should respond_with 422 }
     end
   end
+
+  describe 'PUT/PATCH #update' do 
+    before(:each) do
+      @user = FactoryGirl.create(:user)
+      @daily_category = FactoryGirl.create(:daily_category, user: @user)
+      api_authorization_header @user.auth_token
+    end
+
+    context 'when is successfully updated' do
+      before(:each) do
+        patch :update, { id: @daily_category.id ,
+              daily_category: { kind: 'web-development' } }
+      end
+
+      it 'renders json representation for the udpated user' do
+        daily_category_response = json_response
+        expect(daily_category_response[:kind]).to eql('web-development')
+      end
+
+      it { should respond_with 200 }
+    end
+
+    context 'when update is not succesful' do
+      before(:each) do
+        patch :update, { id: @daily_category.id,
+              daily_category: { total_points: 'seven'} }
+      end
+
+      it 'renders json errors' do
+        daily_category_response = json_response
+        expect(daily_category_response). to have_key(:errors)
+      end
+
+      it 'renders the json errors on why the user did not update' do
+        daily_category_response = json_response
+        expect(daily_category_response[:errors][:total_points]). to include('is not a number')
+      end
+
+      it { should respond_with 422 }
+    end
+  end
+
+  describe 'DELETE #destroy' do 
+    before(:each) do 
+      @user = FactoryGirl.create(:user)
+      @daily_category = FactoryGirl.create(:daily_category, user: @user)
+      api_authorization_header @user.auth_token
+      delete :destroy, { id: @daily_category.id }
+    end
+
+    it { should respond_with 204 }
+
+  end
 end
