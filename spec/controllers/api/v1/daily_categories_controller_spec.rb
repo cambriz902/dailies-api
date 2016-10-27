@@ -12,6 +12,11 @@ describe Api::V1::DailyCategoriesController do
       expect(daily_category_response[:kind]).to eql(@daily_category.kind)
     end
 
+    it 'has the user as an embeded object' do 
+      daily_category_response = json_response[:daily_category]
+      expect(daily_category_response[:user][:email]).to eql(@daily_category.user.email)
+    end
+
     it { should respond_with 200 }
   end
 
@@ -24,6 +29,13 @@ describe Api::V1::DailyCategoriesController do
     it 'returns 4 records from the database' do 
       daily_categories_response = json_response[:daily_categories]
       expect(daily_categories_response).to have(4).items
+    end
+
+    it 'returns the user object into each daily_category' do
+      daily_categories_response = json_response[:daily_categories]
+      daily_categories_response.each do |daily_category|
+        expect(daily_category[:user]).to be_present
+      end
     end
 
     it { should respond_with 200 }
