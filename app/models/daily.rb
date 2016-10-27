@@ -13,5 +13,9 @@
 #
 
 class Daily < ApplicationRecord
+  validates :daily_category_id, :title, :description, presence: true
+  validates :points, presence: true,
+                    numericality: { greater_than_or_equal_to: 1 }
+
   belongs_to :daily_category
 end
