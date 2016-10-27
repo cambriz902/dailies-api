@@ -14,6 +14,8 @@
 
 FactoryGirl.define do
   factory :daily do
-    
+    title 'run'
+    description 'run 3 miles'
+    daily_category
   end
 end

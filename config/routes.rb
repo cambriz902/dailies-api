@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resources :users, only: [:show, :create, :update, :destroy]
       resources :sessions, only: [:create, :destroy]
       resources :daily_categories, only: [:show, :index, :create, :update, :destroy]
+      resources :dailies, only: [:index]
     end
   end
 end
