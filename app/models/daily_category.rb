@@ -18,5 +18,5 @@ class DailyCategory < ApplicationRecord
   validates :total_points, numericality: { greater_than_or_equal_to: 0}, presence: true
   
   belongs_to :user
-  has_many :dailies
+  has_many :dailies, dependent: :destroy
 end

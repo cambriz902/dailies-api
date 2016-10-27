@@ -28,6 +28,6 @@ describe DailyCategory do
   it { should validate_presence_of :user_id }
 
   it { should belong_to :user }
-  it { should have_many :dailies }
+  it { should have_many(:dailies).dependent(:destroy) }
 
 end
