@@ -4,7 +4,7 @@ class Api::V1::DailyCategoriesController < ApplicationController
 
   def index
     daily_categories = params[:daily_category_ids].present? ?
-      DailyCategory.find(params[:daily_category_ids]) : DailyCategory.all 
+      current_user.daily_categories.find(params[:daily_category_ids]) : DailyCategory.all 
     render json: daily_categories, status: 200
   end
 

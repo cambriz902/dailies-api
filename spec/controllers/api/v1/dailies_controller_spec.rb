@@ -34,4 +34,24 @@ describe Api::V1::DailiesController, type: :controller do
 
     it { should respond_with 200 }
   end
+
+  describe 'POST #create' do
+    before(:each) do 
+      current_user = FactoryGirl.create(:user)
+      api_authorization_header current_user.auth_token
+      daily_category = FactoryGirl.create(:daily_category, user: current_user)
+      daily_params = { 
+        title: 'water', 
+        description: 'drink 6 cups of water' 
+      }
+      post :create, daily_category_id: daily_category.id, daily: daily_params
+    end
+
+    it 'returns user daily record' do
+      daily_response = json_response[:daily]
+      expect(daily_response[:id]).to be_present
+    end
+
+    it { should respond_with 201 }
+  end
 end

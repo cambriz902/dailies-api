@@ -4,6 +4,7 @@ describe Api::V1::DailyCategoriesController do
   describe 'GET #show' do
     before(:each) do
       @daily_category = FactoryGirl.create(:daily_category)
+      2.times { FactoryGirl.create(:daily, daily_category: @daily_category) }
       get :show, id: @daily_category
     end
 
@@ -17,11 +18,16 @@ describe Api::V1::DailyCategoriesController do
       expect(daily_category_response[:user][:email]).to eql(@daily_category.user.email)
     end
 
+    it 'has the dailies embeded object' do
+      daily_category_response = json_response[:daily_category]
+      expect(daily_category_response[:dailies]).to have(2).items 
+    end
+
     it { should respond_with 200 }
   end
 
   describe 'GET #index' do
-    before(:each) do 
+    before(:each) do
       4.times { FactoryGirl.create(:daily_category) }
     end
 
@@ -48,6 +54,7 @@ describe Api::V1::DailyCategoriesController do
     context 'when daily_category_ids parameter is present' do
       before(:each) do
         @user = FactoryGirl.create(:user)
+        api_authorization_header @user.auth_token
         3.times { FactoryGirl.create(:daily_category, user: @user) }
         get :index, daily_category_ids: @user.daily_category_ids
       end
