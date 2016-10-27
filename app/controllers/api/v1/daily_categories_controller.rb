@@ -3,7 +3,8 @@ class Api::V1::DailyCategoriesController < ApplicationController
   respond_to :json
 
   def index
-    daily_categories = DailyCategory.all
+    daily_categories = params[:daily_category_ids].present? ?
+      DailyCategory.find(params[:daily_category_ids]) : DailyCategory.all 
     render json: daily_categories, status: 200
   end
 

@@ -23,22 +23,44 @@ describe Api::V1::DailyCategoriesController do
   describe 'GET #index' do
     before(:each) do 
       4.times { FactoryGirl.create(:daily_category) }
-      get :index
     end
 
-    it 'returns 4 records from the database' do 
-      daily_categories_response = json_response[:daily_categories]
-      expect(daily_categories_response).to have(4).items
-    end
-
-    it 'returns the user object into each daily_category' do
-      daily_categories_response = json_response[:daily_categories]
-      daily_categories_response.each do |daily_category|
-        expect(daily_category[:user]).to be_present
+    context 'when not receiving any daily_category_ids parameter' do
+      before(:each) do
+        get :index
       end
+
+      it 'returns 4 records from the database' do 
+        daily_categories_response = json_response[:daily_categories]
+        expect(daily_categories_response).to have(4).items
+      end
+
+      it 'returns the user object into each daily_category' do
+        daily_categories_response = json_response[:daily_categories]
+        daily_categories_response.each do |daily_category|
+          expect(daily_category[:user]).to be_present
+        end
+      end
+
+      it { should respond_with 200 }
     end
 
-    it { should respond_with 200 }
+    context 'when daily_category_ids parameter is present' do
+      before(:each) do
+        @user = FactoryGirl.create(:user)
+        3.times { FactoryGirl.create(:daily_category, user: @user) }
+        get :index, daily_category_ids: @user.daily_category_ids
+      end
+
+      it 'returns just the daily_categories that belong to the user' do
+        daily_categories_response = json_response[:daily_categories]
+        daily_categories_response.each do |daily_category_response|
+          expect(daily_category_response[:user][:email]).to eql(@user.email)
+        end
+      end
+
+      it { should respond_with 200 }
+    end
   end
 
   describe 'POST #create' do
