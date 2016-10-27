@@ -39,6 +39,7 @@ RSpec.describe User, type: :model do
   it { should allow_value('example@domain.com').for(:email) } 
 
   it { should have_many(:daily_categories).dependent(:destroy) }
+  it { should have_many(:dailies).through(:daily_categories) }
 
   describe '#generate_authentication_token!' do
     it 'generates a unique token' do
