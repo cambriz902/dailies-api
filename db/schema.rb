@@ -10,19 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161025223925) do
+ActiveRecord::Schema.define(version: 20161027193003) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "dailies", force: :cascade do |t|
     t.integer  "daily_category_id"
-    t.string   "title"
-    t.string   "descriptions"
+    t.string   "title",             default: ""
+    t.text     "description",       default: ""
     t.integer  "points",            default: 1
     t.datetime "last_completed"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.index ["daily_category_id"], name: "index_dailies_on_daily_category_id", using: :btree
   end
 
