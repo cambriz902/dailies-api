@@ -54,4 +54,16 @@ describe Api::V1::DailiesController, type: :controller do
 
     it { should respond_with 201 }
   end
+
+  describe 'DELETE #destroy' do 
+    before(:each) do
+      current_user = FactoryGirl.create(:user)
+      api_authorization_header current_user.auth_token
+      daily = FactoryGirl.create(:daily)
+      params = { id: daily.id }
+      delete :destroy, params
+    end
+
+    it { should respond_with 204 }
+  end
 end

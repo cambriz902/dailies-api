@@ -24,6 +24,12 @@ class Api::V1::DailiesController < ApplicationController
     end
   end
 
+  def destroy
+    daily = Daily.find(params[:id])
+    daily.destroy
+    head 204
+  end
+
   private
 
   def daily_params
