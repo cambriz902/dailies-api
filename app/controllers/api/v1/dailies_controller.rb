@@ -12,7 +12,6 @@ class Api::V1::DailiesController < ApplicationController
   end
 
   def create
-    # binding.pry
     daily = current_user
       .daily_categories
       .find(params[:daily_category_id])

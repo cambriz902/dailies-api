@@ -14,13 +14,6 @@ gem 'devise'
 # annotate columns to model file
 gem 'annotate'
 
-# errors setting up sabisu, need to come back to this
-# gem 'sabisu_rails', github: "IcaliaLabs/sabisu-rails"
-# gem 'compass-rails', github: "Compass/compass-rails", branch: "master"
-# gem 'furatto', github: "IcaliaLabs/furatto-rails"
-# gem 'font-awesome-rails'
-# gem 'simple_form'
-
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'pry'
