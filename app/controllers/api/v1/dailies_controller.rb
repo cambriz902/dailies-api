@@ -1,5 +1,5 @@
 class Api::V1::DailiesController < ApplicationController
-  before_action :authenticate_with_token!, only: [:index]
+  before_action :authenticate_with_token!, only: [:index, :destroy, :show, :create]
   respond_to :json
 
   def index
