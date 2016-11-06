@@ -32,6 +32,7 @@ class User < ApplicationRecord
 
   def generate_authentication_token!
     begin 
+      logger.debug self
       self.auth_token = Devise.friendly_token
     end while self.class.exists?(auth_token: auth_token)
   end
