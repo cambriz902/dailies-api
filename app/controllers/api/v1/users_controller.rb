@@ -8,7 +8,6 @@ class Api::V1::UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    logger.debug user
     if user.save
       render json: user, status: 201, location: [:api, user]
     else
