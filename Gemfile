@@ -13,6 +13,8 @@ gem 'active_model_serializers', github: 'rails-api/active_model_serializers', br
 gem 'devise'
 # annotate columns to model file
 gem 'annotate'
+# allow cross origin http-requests
+gem 'rack-cors', require: 'rack/cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
