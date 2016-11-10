@@ -16,6 +16,7 @@
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  auth_token             :string           default("")
+#  time_zone              :string           default("")
 #
 
 class UserSerializer < ActiveModel::Serializer
