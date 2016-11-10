@@ -52,6 +52,7 @@ GEM
     arel (7.1.4)
     bcrypt (3.1.11)
     builder (3.2.2)
+    byebug (9.0.6)
     coderay (1.1.1)
     concurrent-ruby (1.0.2)
     database_cleaner (1.5.3)
@@ -95,6 +96,9 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    pry-byebug (3.4.0)
+      byebug (~> 9.0)
+      pry (~> 0.10)
     puma (3.6.0)
     rack (2.0.1)
     rack-cors (0.4.0)
@@ -184,7 +188,7 @@ DEPENDENCIES
   ffaker
   listen (~> 3.0.5)
   pg (~> 0.18)
-  pry
+  pry-byebug
   puma (~> 3.0)
   rack-cors
   rails (~> 5.0.0, >= 5.0.0.1)
