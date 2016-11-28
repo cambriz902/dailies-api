@@ -14,6 +14,8 @@ class Api::V1::SessionsController < ApplicationController
     else
       render json: { errors: 'Invalid email or password' }, status: 422
     end
+  rescue
+    render json: { errors: 'Invalid email or password' }, status: 422
   end
 
   def destroy
