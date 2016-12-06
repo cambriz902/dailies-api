@@ -1,9 +1,9 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :authenticate_with_token!, only: [:update, :destroy]
+  before_action :authenticate_with_token!, only: [:show, :update, :destroy]
   respond_to :json
 
   def show
-    render json: User.find(params[:id]), status: 200
+    render json: { user: { email: current_user.email } }, status: 200
   end
 
   def create
