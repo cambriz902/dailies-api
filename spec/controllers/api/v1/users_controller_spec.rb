@@ -2,23 +2,44 @@ require 'spec_helper'
 
 describe Api::V1::UsersController do
   
-  describe 'GET #show' do
-    before(:each) do
-      @user = FactoryGirl.create(:user)
-      get :show, id: @user.id
+  describe 'GET #authenticated_user' do
+    context 'when is successful' do 
+      before(:each) do 
+        @user = FactoryGirl.create(:user)
+        api_authorization_header(@user.auth_token)
+        get :authenticated_user
+      end
+
+      it 'returns the information about the authenticated user' do
+        user_response = json_response[:user]
+        expect(user_response[:email]).to eql(@user.email)
+      end
+
+      it 'has daily_category array' do 
+        user_response = json_response[:user]
+        expect(user_response[:daily_categories]).to eql([])
+      end
+
+      it 'has dailies array' do
+        user_response = json_response[:user]
+        expect(user_response[:dailies]).to eql([])
+      end
+
+      it { should respond_with 200 }
     end
 
-    it 'returns the information about a user in a hash' do
-      user_response = json_response[:user]
-      expect(user_response[:email]).to eql @user.email
-    end
+    context 'when error accurs' do
+       before(:each) do 
+        @user = FactoryGirl.create(:user)
+        get :authenticated_user
+      end
 
-    it 'has the daily_category ids as an embeded object' do 
-      user_response = json_response[:user]
-      expect(user_response[:daily_category_ids]).to eql([])
-    end
+      it 'returns error message' do
+        expect(json_response[:errors]).to eql('Could not retrieve user information')
+      end
 
-    it { should respond_with 200 }
+      it { should respond_with 404 }
+    end
   end
 
   describe 'POST #create' do

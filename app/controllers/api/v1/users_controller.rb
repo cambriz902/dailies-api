@@ -1,10 +1,6 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :authenticate_with_token!, only: [:show, :update, :destroy]
+  before_action :authenticate_with_token!, only: [:update, :destroy]
   respond_to :json
-
-  def show
-    render json: { user: { email: current_user.email } }, status: 200
-  end
 
   def create
     user = User.new(user_params)
@@ -28,6 +24,21 @@ class Api::V1::UsersController < ApplicationController
   def destroy
     current_user.destroy!
     head 204
+  end
+
+  def authenticated_user
+    user = User
+      .joins("LEFT JOIN daily_categories ON users.id = daily_categories.user_id")
+      .joins("LEFT JOIN dailies ON daily_categories.id = dailies.daily_category_id")
+      .includes(:daily_categories, :daily_categories)
+      .find_by(auth_token: request.headers['Authorization'])
+    if !user.blank?
+      render json: user, status: 200
+    else
+      render json: { errors: 'Could not retrieve user information' }, status: 404
+    end
+  rescue
+    render json: { errors: 'Could not retrieve user information' }, status: 404
   end
   
   private
