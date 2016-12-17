@@ -13,5 +13,5 @@
 #
 
 class DailySerializer < ActiveModel::Serializer
-  attributes :id, :title, :description, :points, :last_completed
+  attributes :id, :title, :description,
 end

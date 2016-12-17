@@ -22,6 +22,6 @@
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :email, :auth_token
 
-  has_many :daily_categories, include: true
+  has_many :daily_categories
   has_many :dailies, through: :daily_categories
 end

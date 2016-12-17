@@ -4,7 +4,7 @@ class Api::V1::UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    if user.save
+    if user.save!
       render json: user, status: 201, location: [:api, user]
     else
       render json: { errors: user.errors }, status: 422
@@ -28,9 +28,7 @@ class Api::V1::UsersController < ApplicationController
 
   def authenticated_user
     user = User
-      .joins("LEFT JOIN daily_categories ON users.id = daily_categories.user_id")
-      .joins("LEFT JOIN dailies ON daily_categories.id = dailies.daily_category_id")
-      .includes(:daily_categories, :daily_categories)
+      .eager_load(:daily_categories, :dailies)
       .find_by(auth_token: request.headers['Authorization'])
     if !user.blank?
       render json: user, status: 200
