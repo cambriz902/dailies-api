@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :authenticate_with_token!, only: [:update, :destroy]
+  before_action :authenticate_with_token!, only: [:authenticated_user, :update, :destroy]
   respond_to :json
 
   def create
@@ -27,14 +27,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   def authenticated_user
-    user = User
-      .eager_load(:daily_categories, :dailies)
-      .find_by(auth_token: request.headers['Authorization'])
-    if !user.blank?
-      render json: user, status: 200
-    else
-      render json: { errors: 'Could not retrieve user information' }, status: 404
-    end
+    render json: current_user, status: 200
   rescue
     render json: { errors: 'Could not retrieve user information' }, status: 404
   end

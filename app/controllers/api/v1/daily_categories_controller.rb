@@ -1,15 +1,14 @@
 class Api::V1::DailyCategoriesController < ApplicationController
-  before_action :authenticate_with_token!, only: [:create, :update, :destroy]
+  before_action :authenticate_with_token!, only: [:index, :show, :create, :update, :destroy]
   respond_to :json
 
   def index
-    daily_categories = params[:daily_category_ids].present? ?
-      current_user.daily_categories.find(params[:daily_category_ids]) : DailyCategory.all 
+    daily_categories = current_user.daily_categories 
     render json: daily_categories, status: 200
   end
 
   def show
-    daily_category = DailyCategory.find(params[:id])
+    daily_category = current_user.daily_categories.find(params[:id])
     render json: daily_category, status: 200
   end
 

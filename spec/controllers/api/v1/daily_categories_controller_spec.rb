@@ -3,24 +3,15 @@ require 'spec_helper'
 describe Api::V1::DailyCategoriesController do 
   describe 'GET #show' do
     before(:each) do
-      @daily_category = FactoryGirl.create(:daily_category)
-      2.times { FactoryGirl.create(:daily, daily_category: @daily_category) }
+      @user = FactoryGirl.create(:user)
+      api_authorization_header(@user.auth_token)
+      @daily_category = FactoryGirl.create(:daily_category, user: @user)
       get :show, id: @daily_category
     end
 
-    it 'returns the information about a daily category on a hash' do
+    it 'returns the information about a daily category in a hash' do
       daily_category_response = json_response[:daily_category]
       expect(daily_category_response[:kind]).to eql(@daily_category.kind)
-    end
-
-    it 'has the user as an embeded object' do 
-      daily_category_response = json_response[:daily_category]
-      expect(daily_category_response[:user][:email]).to eql(@daily_category.user.email)
-    end
-
-    it 'has the dailies embeded object' do
-      daily_category_response = json_response[:daily_category]
-      expect(daily_category_response[:dailies]).to have(2).items 
     end
 
     it { should respond_with 200 }
@@ -28,7 +19,9 @@ describe Api::V1::DailyCategoriesController do
 
   describe 'GET #index' do
     before(:each) do
-      4.times { FactoryGirl.create(:daily_category) }
+      @user = FactoryGirl.create(:user)
+      api_authorization_header(@user.auth_token)
+      4.times { FactoryGirl.create(:daily_category, user: @user) }
     end
 
     context 'when not receiving any daily_category_ids parameter' do
@@ -36,16 +29,9 @@ describe Api::V1::DailyCategoriesController do
         get :index
       end
 
-      it 'returns 4 records from the database' do 
+      it 'returns 4 daily_categories records from the database' do 
         daily_categories_response = json_response[:daily_categories]
         expect(daily_categories_response).to have(4).items
-      end
-
-      it 'returns the user object into each daily_category' do
-        daily_categories_response = json_response[:daily_categories]
-        daily_categories_response.each do |daily_category|
-          expect(daily_category[:user]).to be_present
-        end
       end
 
       it { should respond_with 200 }
@@ -56,14 +42,14 @@ describe Api::V1::DailyCategoriesController do
         @user = FactoryGirl.create(:user)
         api_authorization_header @user.auth_token
         3.times { FactoryGirl.create(:daily_category, user: @user) }
+        2.times { FactoryGirl.create(:daily_category)}
         get :index, daily_category_ids: @user.daily_category_ids
       end
 
-      it 'returns just the daily_categories that belong to the user' do
-        daily_categories_response = json_response[:daily_categories]
-        daily_categories_response.each do |daily_category_response|
-          expect(daily_category_response[:user][:email]).to eql(@user.email)
-        end
+      it 'returns the daily_categories that belong to the user' do
+        daily_category_ids_response = json_response[:daily_categories].pluck(:id)
+        user_daily_category_ids = @user.daily_category_ids
+        expect(daily_category_ids_response).to match_array(user_daily_category_ids)
       end
 
       it { should respond_with 200 }
@@ -123,7 +109,7 @@ describe Api::V1::DailyCategoriesController do
               daily_category: { kind: 'web-development' } }
       end
 
-      it 'renders json representation for the udpated user' do
+      it 'renders json representation for the udpated daily_category' do
         daily_category_response = json_response[:daily_category]
         expect(daily_category_response[:kind]).to eql('web-development')
       end
@@ -142,7 +128,7 @@ describe Api::V1::DailyCategoriesController do
         expect(daily_category_response). to have_key(:errors)
       end
 
-      it 'renders the json errors on why the user did not update' do
+      it 'renders the json errors on why the daily_category did not update' do
         daily_category_response = json_response
         expect(daily_category_response[:errors][:total_points]). to include('is not a number')
       end
@@ -160,6 +146,5 @@ describe Api::V1::DailyCategoriesController do
     end
 
     it { should respond_with 204 }
-
   end
 end

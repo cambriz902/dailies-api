@@ -15,16 +15,6 @@ describe Api::V1::UsersController do
         expect(user_response[:email]).to eql(@user.email)
       end
 
-      it 'has daily_category array' do 
-        user_response = json_response[:user]
-        expect(user_response[:daily_categories]).to eql([])
-      end
-
-      it 'has dailies array' do
-        user_response = json_response[:user]
-        expect(user_response[:dailies]).to eql([])
-      end
-
       it { should respond_with 200 }
     end
 
