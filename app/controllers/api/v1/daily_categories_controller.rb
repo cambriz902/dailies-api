@@ -39,6 +39,6 @@ class Api::V1::DailyCategoriesController < ApplicationController
   private
 
   def daily_category_params
-    params.require(:daily_category).permit(:kind, :total_points, :archived)
+    params.require(:daily_category).permit(:kind, :archived)
   end
 end

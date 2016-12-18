@@ -33,6 +33,6 @@ class Api::V1::DailiesController < ApplicationController
   private
 
   def daily_params
-    params.require(:daily).permit(:title, :description, :archived, :points)
+    params.require(:daily).permit(:title, :description, :archived)
   end
 end
