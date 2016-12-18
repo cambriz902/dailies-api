@@ -20,7 +20,7 @@
 #
 
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :email, :auth_token
+  attributes :id, :email
 
   has_many :daily_categories
   has_many :dailies, through: :daily_categories
