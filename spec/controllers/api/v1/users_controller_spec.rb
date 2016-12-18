@@ -25,10 +25,10 @@ describe Api::V1::UsersController do
       end
 
       it 'returns error message' do
-        expect(json_response[:errors]).to eql('Could not retrieve user information')
+        expect(json_response[:errors]).to eql('Not authenticated')
       end
 
-      it { should respond_with 404 }
+      it { should respond_with 401 }
     end
   end
 
@@ -50,7 +50,7 @@ describe Api::V1::UsersController do
 
     context 'when is not created' do
       before(:each) do
-        @invalid_user_attributes = { 
+        @invalid_user_attributes = {
           password: '12345678',
           password_confirmation: '12345678'
         }

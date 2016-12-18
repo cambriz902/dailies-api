@@ -4,7 +4,7 @@ class Api::V1::UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    if user.save!
+    if user.save
       render json: user, status: 201, location: [:api, user]
     else
       render json: { errors: user.errors }, status: 422
@@ -28,8 +28,6 @@ class Api::V1::UsersController < ApplicationController
 
   def authenticated_user
     render json: current_user, status: 200
-  rescue
-    render json: { errors: 'Could not retrieve user information' }, status: 404
   end
   
   private
