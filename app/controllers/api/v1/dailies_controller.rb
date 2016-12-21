@@ -14,7 +14,7 @@ class Api::V1::DailiesController < ApplicationController
   def create
     daily = current_user
       .daily_categories
-      .find(params[:daily_category_id])
+      .find(params[:daily][:daily_category_id])
       .dailies
       .build(daily_params)
     if daily.save

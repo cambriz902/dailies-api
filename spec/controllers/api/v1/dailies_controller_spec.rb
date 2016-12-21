@@ -42,9 +42,10 @@ describe Api::V1::DailiesController, type: :controller do
       daily_category = FactoryGirl.create(:daily_category, user: current_user)
       daily_params = { 
         title: 'water', 
-        description: 'drink 6 cups of water' 
+        description: 'drink 6 cups of water',
+        daily_category_id: daily_category.id
       }
-      post :create, daily_category_id: daily_category.id, daily: daily_params
+      post :create, daily: daily_params
     end
 
     it 'returns user daily record' do

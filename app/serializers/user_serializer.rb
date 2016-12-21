@@ -24,4 +24,5 @@ class UserSerializer < ActiveModel::Serializer
 
   has_many :daily_categories
   has_many :dailies, through: :daily_categories
+
 end

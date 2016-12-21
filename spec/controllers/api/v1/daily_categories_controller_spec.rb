@@ -77,7 +77,7 @@ describe Api::V1::DailyCategoriesController do
       before(:each) do
         user = FactoryGirl.create(:user)
         @invalid_daily_category_attributes = 
-          { kind: "health", total_points: 'ten' }
+          { archived: false }
         api_authorization_header user.auth_token
         post :create, { daily_category: @invalid_daily_category_attributes }
       end
@@ -89,7 +89,7 @@ describe Api::V1::DailyCategoriesController do
 
       it 'renders json errors on why the user could not be created' do
         daily_category_response = json_response
-        expect(daily_category_response[:errors][:total_points]).to include("is not a number")
+        expect(daily_category_response[:errors][:kind]).to include("can't be blank")
       end
 
       it { should respond_with 422 }
@@ -99,7 +99,9 @@ describe Api::V1::DailyCategoriesController do
   describe 'PUT/PATCH #update' do 
     before(:each) do
       @user = FactoryGirl.create(:user)
-      @daily_category = FactoryGirl.create(:daily_category, user: @user)
+      @daily_category = FactoryGirl.build(:daily_category)
+      @daily_category.user = @user
+      @daily_category.save!
       api_authorization_header @user.auth_token
     end
 
@@ -120,7 +122,7 @@ describe Api::V1::DailyCategoriesController do
     context 'when update is not succesful' do
       before(:each) do
         patch :update, { id: @daily_category.id,
-              daily_category: { total_points: 'seven'} }
+              daily_category: { kind: nil} }
       end
 
       it 'renders json errors' do
@@ -130,7 +132,7 @@ describe Api::V1::DailyCategoriesController do
 
       it 'renders the json errors on why the daily_category did not update' do
         daily_category_response = json_response
-        expect(daily_category_response[:errors][:total_points]). to include('is not a number')
+        expect(daily_category_response[:errors][:kind]). to include("can't be blank")
       end
 
       it { should respond_with 422 }

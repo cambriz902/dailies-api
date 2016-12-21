@@ -3,7 +3,8 @@ class Api::V1::DailyCategoriesController < ApplicationController
   respond_to :json
 
   def index
-    daily_categories = current_user.daily_categories 
+    daily_categories = params[:daily_category_ids] ? 
+      current_user.daily_categories.find(params[:daily_category_ids]) : current_user.daily_categories
     render json: daily_categories, status: 200
   end
 
@@ -17,7 +18,7 @@ class Api::V1::DailyCategoriesController < ApplicationController
     if daily_category.save
       render json: daily_category, status: 201, location: [:api, daily_category]
     else
-      render json: { errors: daily_category.errors }, status: 422
+      render json: { errors: daily_category.errors.messages }, status: 422
     end
   end
 
