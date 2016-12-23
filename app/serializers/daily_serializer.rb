@@ -13,5 +13,5 @@
 #
 
 class DailySerializer < ActiveModel::Serializer
-  attributes :id, :title, :description
+  attributes :id, :daily_category_id, :title, :description
 end
