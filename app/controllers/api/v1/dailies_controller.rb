@@ -33,7 +33,8 @@ class Api::V1::DailiesController < ApplicationController
   end
 
   def complete
-    daily = current_user.dailies.find_by(id: params[:id])
+    binding.pry
+    daily = current_user.dailies.find_by_id(params[:id])
     head 204 if daily.complete!
   rescue 
     render json: { error: 'There was an error completing your daily' }, status: 400
