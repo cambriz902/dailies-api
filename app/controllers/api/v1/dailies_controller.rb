@@ -33,7 +33,6 @@ class Api::V1::DailiesController < ApplicationController
   end
 
   def complete
-    binding.pry
     daily = current_user.dailies.find_by_id(params[:id])
     head 204 if daily.complete!
   rescue 
