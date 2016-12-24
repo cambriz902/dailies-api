@@ -1,5 +1,7 @@
 class Api::V1::DailiesController < ApplicationController
-  before_action :authenticate_with_token!, only: [:index, :destroy, :show, :create]
+  before_action :authenticate_with_token!, 
+    only: [:index, :destroy, :show, :create, :complet]
+
   respond_to :json
 
   def index
@@ -28,6 +30,13 @@ class Api::V1::DailiesController < ApplicationController
     daily = Daily.find(params[:id])
     daily.destroy
     head 204
+  end
+
+  def complete
+    daily = current_user.dailies.find_by(id: params[:id])
+    head 204 if daily.complete!
+  rescue 
+    render json: { error: 'There was an error completing your daily' }, status: 400
   end
 
   private

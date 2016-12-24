@@ -10,6 +10,12 @@ Rails.application.routes.draw do
       resources :daily_categories, only: [:show, :index, :create, :update, :destroy]
       resources :dailies, only: [:index, :show, :create, :destroy]
 
+      resources :dailies do
+        member do
+          put :complete
+        end
+      end
+
       get 'users/authenticated_user', to: 'users#authenticated_user'
     end
   end

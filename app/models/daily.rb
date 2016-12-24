@@ -18,4 +18,13 @@ class Daily < ApplicationRecord
                     numericality: { greater_than_or_equal_to: 1 }
 
   belongs_to :daily_category
+  has_one :user, through: :daily_category
+
+  def complete!
+    Daily.transaction do 
+      self.daily_category.increment!(:total_points, by = 1)
+      self.update_attributes!(last_completed: DateTime.now.utc)
+    end
+  end
+
 end
