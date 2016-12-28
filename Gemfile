@@ -15,6 +15,10 @@ gem 'devise'
 gem 'annotate'
 # allow cross origin http-requests
 gem 'rack-cors', require: 'rack/cors'
+# Timecop to use with rspec
+gem 'timecop'
+# rake
+gem 'rake', '~> 11.3.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

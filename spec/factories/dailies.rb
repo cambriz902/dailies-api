@@ -17,5 +17,6 @@ FactoryGirl.define do
     title 'run'
     description 'run 3 miles'
     daily_category
+    last_completed nil
   end
 end

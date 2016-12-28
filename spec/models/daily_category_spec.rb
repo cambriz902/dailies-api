@@ -11,7 +11,7 @@
 #  updated_at   :datetime         not null
 #
 
-require 'rails_helper'
+require 'spec_helper'
 
 describe DailyCategory do
   let(:daily_category) { FactoryGirl.build(:daily_category) }

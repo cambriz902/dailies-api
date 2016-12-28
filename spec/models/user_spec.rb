@@ -19,7 +19,7 @@
 #  time_zone              :string           default("")
 #
 
-require 'rails_helper'
+require 'spec_helper'
 
 RSpec.describe User, type: :model do
   before { @user = FactoryGirl.create(:user, auth_token: 'auniquetoken1234') }

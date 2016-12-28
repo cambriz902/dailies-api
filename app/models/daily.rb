@@ -18,7 +18,13 @@ class Daily < ApplicationRecord
                     numericality: { greater_than_or_equal_to: 1 }
 
   belongs_to :daily_category
-  has_one :user, through: :daily_category
+  delegate :user, to: :daily_category
+
+  scope :not_completed, -> { where(
+    'last_completed < :start OR last_completed IS :new', 
+    start: Time.current.beginning_of_day,
+    new: nil
+  )}
 
   def complete!
     Daily.transaction do 

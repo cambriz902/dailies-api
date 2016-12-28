@@ -13,4 +13,6 @@
 
 class DailyCategorySerializer < ActiveModel::Serializer
   attributes :id, :kind, :total_points
+
+  # has_many :today_dailies
 end

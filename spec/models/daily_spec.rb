@@ -12,7 +12,7 @@
 #  updated_at        :datetime         not null
 #
 
-require 'rails_helper'
+require 'spec_helper'
 
 describe Daily do
   let(:daily) { FactoryGirl.build :daily }
@@ -30,4 +30,23 @@ describe Daily do
 
   it { should belong_to :daily_category }
 
+  describe '#not_completed' do 
+    before(:each) { Timecop.freeze }
+    after(:each) { Timecop.return }
+
+    it 'returns dailies with last_completed nil' do
+      FactoryGirl.create(:daily, last_completed: nil)
+      expect(Daily.not_completed.count).to eql(1)
+    end
+
+    it 'return dailies with last_completed not today' do
+      FactoryGirl.create(:daily, last_completed: DateTime.current.yesterday)
+      expect(Daily.not_completed.count).to eql(1)
+    end
+
+    it "doesn't return dailies completed today" do
+      FactoryGirl.create(:daily, last_completed: DateTime.current)
+      expect(Daily.not_completed.count).to eql(0)
+    end
+  end
 end

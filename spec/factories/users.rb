@@ -24,5 +24,6 @@ FactoryGirl.define do
     email { FFaker::Internet.email }
     password '12345678'
     password_confirmation '12345678' 
+    time_zone 'America/Los_Angeles'
   end
 end

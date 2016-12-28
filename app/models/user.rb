@@ -30,6 +30,7 @@ class User < ApplicationRecord
 
   has_many :daily_categories, dependent: :destroy
   has_many :dailies, through: :daily_categories
+  has_many :today_dailies, through: :daily_categories, class_name: 'Daily'
 
   def generate_authentication_token!
     begin 
