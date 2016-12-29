@@ -9,8 +9,10 @@ class Api::V1::SessionsController < ApplicationController
     if !user.blank? && user.valid_password?(user_password)
       sign_in user, store: false
       user.generate_authentication_token!
-      user.save
-      render json: { user: { auth_token: user.auth_token, email: user.email } }, status: 200, location: [:api, user]
+      user.save!
+      Time.use_zone(user.time_zone)  do
+        render json: user, serializer: LoginUserSerializer , status: 200, location: [:api, user]
+      end
     else
       render json: { errors: 'Invalid email or password' }, status: 422
     end

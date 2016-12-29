@@ -7,6 +7,7 @@
  Example:
 
  Category = {
+  user_id: #
   kind: 'Workout',
   total_points: 0,
   archived: false
@@ -14,6 +15,7 @@
 
  Daily = {
   title: 'Run',
+  daily_category_id: #
   Description: 'Run 3-5 miles',
   points: 1
  }
