@@ -11,7 +11,7 @@ class Api::V1::SessionsController < ApplicationController
       user.generate_authentication_token!
       user.save!
       Time.use_zone(user.time_zone)  do
-        render json: user, serializer: LoginUserSerializer , status: 200, location: [:api, user]
+        render json: user, serializer: LoginUserSerializer , status: 200
       end
     else
       render json: { errors: 'Invalid email or password' }, status: 422

@@ -20,7 +20,7 @@ class Api::V1::DailiesController < ApplicationController
       .dailies
       .build(daily_params)
     if daily.save
-      render json: daily, status: 201, location: [:api, daily]
+      render json: daily, status: 201
     else
       render json: { errors: daily.errors }, status: 422
     end

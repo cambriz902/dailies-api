@@ -16,7 +16,7 @@ class Api::V1::DailyCategoriesController < ApplicationController
   def create
     daily_category = current_user.daily_categories.build(daily_category_params)
     if daily_category.save
-      render json: daily_category, status: 201, location: [:api, daily_category]
+      render json: daily_category, status: 201
     else
       render json: { errors: daily_category.errors.messages }, status: 422
     end
@@ -25,7 +25,7 @@ class Api::V1::DailyCategoriesController < ApplicationController
   def update
     daily_category = current_user.daily_categories.find(params[:id])
     if daily_category.update(daily_category_params)
-      render json: daily_category, status: 200, location: [:api, daily_category]
+      render json: daily_category, status: 200
     else
       render json: { errors: daily_category.errors }, status: 422
     end
