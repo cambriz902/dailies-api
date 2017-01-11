@@ -6,8 +6,9 @@ class Api::V1::UsersController < ApplicationController
     user = User.new(user_params)
     if user.save
       render json: user, status: 201
+    else
+      render json: { errors: user.errors.messages }, status: 422
     end
-    render json: { errors: user.errors.messages }, status: 422
   rescue
     render json: { errors: user.errors.messages }, status: 422
   end
